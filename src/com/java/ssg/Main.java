@@ -1,5 +1,7 @@
 package com.java.ssg;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
 		System.out.println("=== 프로그램 시작 ===");
 
 		Scanner sc = new Scanner(System.in);
-		int articleId = 0;
+		List<Article> articles = new ArrayList<>();
 
 		while (true) {
 			System.out.printf("명령어 입력 : ");
@@ -17,16 +19,26 @@ public class Main {
 
 			if (command.equals("article write")) {
 				
-				articleId++;
-				
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
 				
 				System.out.printf("내용 : ");
 				String content = sc.nextLine();
 				
-				System.out.printf("%d번 글이 생성되었습니다.\n", articleId);
+				Article article = new Article(title, content);
+				articles.add(article);
 				
+				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
+				
+			} else if (command.equals("article list")) {
+
+				for (Article article : articles) {
+					System.out.printf("글 ID : %d\n", article.id);
+					System.out.printf("제목 : %s\n", article.title);
+					System.out.printf("내용 : %s\n", article.content);
+					System.out.println("===========");
+				}
+			
 			} else if (command.equals("system exit")) {
 				System.out.println("system exit");
 				break;
@@ -39,5 +51,18 @@ public class Main {
 		System.out.println("=== 프로그램 종료 ===");
 
 	}
+}
 
+class Article {
+	static int indexId = 0;
+	int id;
+	String title;
+	String content;
+	
+	Article(String title, String content) {
+		indexId++;
+		id = indexId;
+		this.title = title;
+		this.content = content;
+	}
 }
