@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.java.ssg.dto.Article;
+import com.java.ssg.dto.Member;
 import com.java.ssg.util.Util;
 
 public class App {
 	List<Article> articles;
+	List<Member> members;
 
 	App() {
 		articles = new ArrayList<>();
+		members = new ArrayList<>();
 	}
 
 	public void start() {
@@ -38,8 +41,44 @@ public class App {
 
 				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
 
-			} else if (command.startsWith("article list")) {
+			} else if (command.equals("member join")) {
+				String loginId;
+				String loginPw;
+				String loginPwConfirm;
+
+				System.out.printf("아이디 : ");
+				loginId = sc.nextLine();
 				
+				if (getMemberByLoginId(loginId) != null) {
+					System.out.println("이미 존재하는 아이디입니다.");
+					continue;
+				}
+				
+				while (true) {
+					System.out.printf("비밀번호 : ");
+					loginPw = sc.nextLine();
+
+					System.out.printf("비밀번호 확인 : ");
+					loginPwConfirm = sc.nextLine();
+
+					if (loginPw.equals(loginPwConfirm) == false) {
+						System.out.println("비밀번호를 확인해주세요.");
+						continue;
+					}
+					
+					break;
+				}
+				
+				System.out.printf("이름 : ");
+				String userName = sc.nextLine();
+
+				Member member = new Member(loginId, loginPw, userName);
+				members.add(member);
+
+				System.out.printf("환영합니다. %s님이 가입하셨습니다.\n", member.userName);
+
+			} else if (command.startsWith("article list")) {
+
 				command = command.substring("article list".length()).trim();
 				List<Article> printArticle = null;
 
@@ -47,30 +86,30 @@ public class App {
 					System.out.println("글이 존재하지 않습니다.");
 					continue;
 				}
-				
+
 				if (command.length() == 0) {
-					
+
 					printArticle = articles;
-					
+
 				} else {
-					
+
 					List<Article> searchArticles = new ArrayList<>();
-					
+
 					for (Article article : articles) {
 						if (article.title.contains(command)) {
 							searchArticles.add(article);
 						}
 					}
-					
+
 					if (searchArticles.size() == 0) {
 						System.out.println("요청하신 검색 결과가 존재하지 않습니다.");
 						continue;
 					}
-					
+
 					printArticle = searchArticles;
-					
+
 				}
-				
+
 				for (Article article : printArticle) {
 					System.out.printf("글 ID : %d\n", article.id);
 					System.out.printf("제목 : %s\n", article.title);
@@ -176,15 +215,27 @@ public class App {
 		articles.add(new Article("제목2", "내용2"));
 		articles.add(new Article("제목3", "내용3"));
 	}
-	
+
 	public Article getArticleById(int id) {
-		
+
 		for (Article article : articles) {
 
 			if (article.id == id) {
 				return article;
 			}
 
+		}
+
+		return null;
+
+	}
+	
+	public Member getMemberByLoginId(String loginId) {
+		
+		for (Member member : members) {
+			if(member.loginId.equals(loginId)) {
+				return member;
+			}
 		}
 		
 		return null;
