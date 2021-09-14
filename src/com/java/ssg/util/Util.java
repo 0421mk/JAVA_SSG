@@ -12,4 +12,10 @@ public class Util {
 		
 		return format_time1;
 	}
+	
+	public static boolean isNumeric(String str) {
+		boolean check = str.matches("-?\\d+");
+
+		return check;
+	}
 }
