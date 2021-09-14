@@ -31,6 +31,11 @@ public class App {
 			String command = sc.nextLine();
 
 			if (command.equals("article write")) {
+				
+				if (isLogined() == false) {
+					System.out.println("로그인 후 이용해주세요.");
+					continue;
+				}
 
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
@@ -44,6 +49,12 @@ public class App {
 				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
 
 			} else if (command.equals("member join")) {
+				
+				if (isLogined()) {
+					System.out.println("로그아웃 후 이용해주세요.");
+					continue;
+				}
+				
 				String loginId;
 				String loginPw;
 				String loginPwConfirm;
@@ -80,6 +91,12 @@ public class App {
 				System.out.printf("환영합니다. %s님이 가입하셨습니다.\n", member.userName);
 
 			} else if (command.equals("member login")) {
+				
+				if (isLogined()) {
+					System.out.println("로그아웃 후 이용해주세요.");
+					continue;
+				}
+				
 				String loginId;
 				String loginPw;
 
@@ -103,6 +120,16 @@ public class App {
 				
 				loginedMember = member;
 				System.out.printf("로그인 성공! %s님 환영합니다!\n", loginedMember.userName);
+
+			} else if (command.equals("member logout")) {
+				
+				if (isLogined() == false) {
+					System.out.println("로그인 후 이용해주세요.");
+					continue;
+				}
+				
+				System.out.printf("%s님이 로그아웃되었습니다.\n", loginedMember.userName);
+				loginedMember = null;
 
 			} else if (command.startsWith("article list")) {
 
@@ -146,6 +173,11 @@ public class App {
 				}
 
 			} else if (command.startsWith("article modify")) {
+				
+				if (isLogined() == false) {
+					System.out.println("로그인 후 이용해주세요.");
+					continue;
+				}
 
 				command = command.substring("article modify".length()).trim();
 
@@ -203,6 +235,11 @@ public class App {
 				System.out.println("===========");
 
 			} else if (command.startsWith("article delete")) {
+				
+				if (isLogined() == false) {
+					System.out.println("로그인 후 이용해주세요.");
+					continue;
+				}
 
 				command = command.substring("article delete".length()).trim();
 
@@ -275,5 +312,9 @@ public class App {
 		
 		return null;
 		
+	}
+	
+	public boolean isLogined() {
+		return loginedMember != null;
 	}
 }
