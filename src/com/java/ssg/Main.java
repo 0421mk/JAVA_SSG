@@ -7,13 +7,19 @@ import java.util.Scanner;
 import com.java.ssg.util.Util;
 
 public class Main {
+	static List<Article> articles;
+	
+	static {
+		articles = new ArrayList<>();
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("=== 프로그램 시작 ===");
 
 		Scanner sc = new Scanner(System.in);
-		List<Article> articles = new ArrayList<>();
+		
+		makeTestData();
 
 		while (true) {
 			System.out.printf("명령어 입력 : ");
@@ -164,10 +170,18 @@ public class Main {
 
 	}
 
-	public static boolean isNumeric(String str) {
+	private static boolean isNumeric(String str) {
 		boolean check = str.matches("-?\\d+");
 
 		return check;
+	}
+	
+	private static void makeTestData() {
+		System.out.println("테스트를 위한 데이터를 생성합니다.");
+		
+		articles.add(new Article("제목1", "내용1"));
+		articles.add(new Article("제목2", "내용2"));
+		articles.add(new Article("제목3", "내용3"));
 	}
 }
 
