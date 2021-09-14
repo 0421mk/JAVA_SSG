@@ -11,7 +11,8 @@ import com.java.ssg.util.Util;
 public class App {
 	List<Article> articles;
 	List<Member> members;
-
+	static Member loginedMember = null;
+	
 	App() {
 		articles = new ArrayList<>();
 		members = new ArrayList<>();
@@ -76,6 +77,31 @@ public class App {
 				members.add(member);
 
 				System.out.printf("환영합니다. %s님이 가입하셨습니다.\n", member.userName);
+
+			} else if (command.equals("member login")) {
+				String loginId;
+				String loginPw;
+
+				System.out.printf("아이디 : ");
+				loginId = sc.nextLine();
+				
+				System.out.printf("비밀번호 : ");
+				loginPw = sc.nextLine();
+				
+				Member member = getMemberByLoginId(loginId);
+				
+				if (member == null) {
+					System.out.println("아이디를 확인해주세요.");
+					continue;
+				}
+				
+				if(member.loginPw.equals(loginPw) == false) {
+					System.out.println("비밀번호를 확인해주세요.");
+					continue;
+				}
+				
+				loginedMember = member;
+				System.out.printf("로그인 성공! %s님 환영합니다!\n", loginedMember.userName);
 
 			} else if (command.startsWith("article list")) {
 
