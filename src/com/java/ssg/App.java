@@ -63,16 +63,7 @@ public class App {
 				}
 
 				int commandNum = Integer.parseInt(command);
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-
-					if (article.id == commandNum) {
-						foundArticle = article;
-						break;
-					}
-
-				}
+				Article foundArticle = getArticleById(commandNum);
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
@@ -103,16 +94,7 @@ public class App {
 				}
 
 				int commandNum = Integer.parseInt(command);
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-
-					if (article.id == commandNum) {
-						foundArticle = article;
-						break;
-					}
-
-				}
+				Article foundArticle = getArticleById(commandNum);
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
@@ -138,16 +120,7 @@ public class App {
 				}
 
 				int commandNum = Integer.parseInt(command);
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-
-					if (article.id == commandNum) {
-						foundArticle = article;
-						break;
-					}
-
-				}
+				Article foundArticle = getArticleById(commandNum);
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
@@ -176,5 +149,19 @@ public class App {
 		articles.add(new Article("제목1", "내용1"));
 		articles.add(new Article("제목2", "내용2"));
 		articles.add(new Article("제목3", "내용3"));
+	}
+	
+	public Article getArticleById(int id) {
+		
+		for (Article article : articles) {
+
+			if (article.id == id) {
+				return article;
+			}
+
+		}
+		
+		return null;
+		
 	}
 }
