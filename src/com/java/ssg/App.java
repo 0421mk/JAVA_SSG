@@ -38,14 +38,40 @@ public class App {
 
 				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
 
-			} else if (command.equals("article list")) {
+			} else if (command.startsWith("article list")) {
+				
+				command = command.substring("article list".length()).trim();
+				List<Article> printArticle = null;
 
 				if (articles.size() == 0) {
 					System.out.println("글이 존재하지 않습니다.");
 					continue;
 				}
-
-				for (Article article : articles) {
+				
+				if (command.length() == 0) {
+					
+					printArticle = articles;
+					
+				} else {
+					
+					List<Article> searchArticles = new ArrayList<>();
+					
+					for (Article article : articles) {
+						if (article.title.contains(command)) {
+							searchArticles.add(article);
+						}
+					}
+					
+					if (searchArticles.size() == 0) {
+						System.out.println("요청하신 검색 결과가 존재하지 않습니다.");
+						continue;
+					}
+					
+					printArticle = searchArticles;
+					
+				}
+				
+				for (Article article : printArticle) {
 					System.out.printf("글 ID : %d\n", article.id);
 					System.out.printf("제목 : %s\n", article.title);
 					System.out.printf("날짜 : %s\n", article.date);
