@@ -46,6 +46,46 @@ public class Main {
 					System.out.println("===========");
 				}
 
+			} else if (command.startsWith("article modify")) {
+
+				command = command.substring("article modify".length()).trim();
+
+				if (isNumeric(command) == false) {
+					System.out.println("한칸 띄고 숫자만 입력해주세요.");
+					continue;
+				}
+
+				int commandNum = Integer.parseInt(command);
+				Article foundArticle = null;
+
+				for (Article article : articles) {
+
+					if (article.id == commandNum) {
+						foundArticle = article;
+						break;
+					}
+
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
+					continue;
+				}
+				
+				System.out.printf("제목 : ");
+				String title = sc.nextLine();
+
+				System.out.printf("내용 : ");
+				String content = sc.nextLine();
+				
+				String date = Util.getNowDateStr();
+
+				foundArticle.title = title;
+				foundArticle.content = content;
+				foundArticle.date = date;
+
+				System.out.println("게시물 수정을 완료했습니다.");
+
 			} else if (command.startsWith("article detail")) {
 
 				command = command.substring("article detail".length()).trim();
@@ -80,7 +120,7 @@ public class Main {
 
 			} else if (command.startsWith("article delete")) {
 
-				command = command.substring("article detail".length()).trim();
+				command = command.substring("article delete".length()).trim();
 
 				if (isNumeric(command) == false) {
 					System.out.println("한칸 띄고 숫자만 입력해주세요.");
