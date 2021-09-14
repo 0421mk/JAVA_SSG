@@ -23,7 +23,8 @@ public class App {
 
 		Scanner sc = new Scanner(System.in);
 
-		makeTestData();
+		makeTestArticleData();
+		makeTestMemberData();
 
 		while (true) {
 			System.out.printf("명령어 입력 : ");
@@ -234,12 +235,20 @@ public class App {
 
 	}
 
-	public void makeTestData() {
-		System.out.println("테스트를 위한 데이터를 생성합니다.");
+	public void makeTestArticleData() {
+		System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
 
 		articles.add(new Article("제목1", "내용1"));
 		articles.add(new Article("제목2", "내용2"));
 		articles.add(new Article("제목3", "내용3"));
+	}
+	
+	public void makeTestMemberData() {
+		System.out.println("테스트를 위한 멤버 데이터를 생성합니다.");
+
+		members.add(new Member("admin", "admin", "관리자"));
+		members.add(new Member("user2", "user2", "유저2"));
+		members.add(new Member("user3", "user3", "유저3"));
 	}
 
 	public Article getArticleById(int id) {
