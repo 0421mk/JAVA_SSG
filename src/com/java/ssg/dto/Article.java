@@ -9,13 +9,15 @@ public class Article {
 	public String content;
 	public String date;
 	public int hit = 0;
+	public int memberId;
 
-	public Article(String title, String content) {
+	public Article(String title, String content, int memberId) {
 		indexId++;
 		id = indexId;
 		this.title = title;
 		this.content = content;
 		this.date = Util.getNowDateStr();
+		this.memberId = memberId;
 	}
 	
 	public void increseHit() {

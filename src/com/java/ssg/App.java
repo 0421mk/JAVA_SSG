@@ -12,7 +12,7 @@ public class App {
 	List<Article> articles;
 	List<Member> members;
 	static Member loginedMember = null;
-	
+
 	App() {
 		articles = new ArrayList<>();
 		members = new ArrayList<>();
@@ -31,7 +31,7 @@ public class App {
 			String command = sc.nextLine();
 
 			if (command.equals("article write")) {
-				
+
 				if (isLogined() == false) {
 					System.out.println("로그인 후 이용해주세요.");
 					continue;
@@ -43,30 +43,30 @@ public class App {
 				System.out.printf("내용 : ");
 				String content = sc.nextLine();
 
-				Article article = new Article(title, content);
+				Article article = new Article(title, content, loginedMember.id);
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
 
 			} else if (command.equals("member join")) {
-				
+
 				if (isLogined()) {
 					System.out.println("로그아웃 후 이용해주세요.");
 					continue;
 				}
-				
+
 				String loginId;
 				String loginPw;
 				String loginPwConfirm;
 
 				System.out.printf("아이디 : ");
 				loginId = sc.nextLine();
-				
+
 				if (getMemberByLoginId(loginId) != null) {
 					System.out.println("이미 존재하는 아이디입니다.");
 					continue;
 				}
-				
+
 				while (true) {
 					System.out.printf("비밀번호 : ");
 					loginPw = sc.nextLine();
@@ -78,10 +78,10 @@ public class App {
 						System.out.println("비밀번호를 확인해주세요.");
 						continue;
 					}
-					
+
 					break;
 				}
-				
+
 				System.out.printf("이름 : ");
 				String userName = sc.nextLine();
 
@@ -91,43 +91,43 @@ public class App {
 				System.out.printf("환영합니다. %s님이 가입하셨습니다.\n", member.userName);
 
 			} else if (command.equals("member login")) {
-				
+
 				if (isLogined()) {
 					System.out.println("로그아웃 후 이용해주세요.");
 					continue;
 				}
-				
+
 				String loginId;
 				String loginPw;
 
 				System.out.printf("아이디 : ");
 				loginId = sc.nextLine();
-				
+
 				System.out.printf("비밀번호 : ");
 				loginPw = sc.nextLine();
-				
+
 				Member member = getMemberByLoginId(loginId);
-				
+
 				if (member == null) {
 					System.out.println("아이디를 확인해주세요.");
 					continue;
 				}
-				
-				if(member.loginPw.equals(loginPw) == false) {
+
+				if (member.loginPw.equals(loginPw) == false) {
 					System.out.println("비밀번호를 확인해주세요.");
 					continue;
 				}
-				
+
 				loginedMember = member;
 				System.out.printf("로그인 성공! %s님 환영합니다!\n", loginedMember.userName);
 
 			} else if (command.equals("member logout")) {
-				
+
 				if (isLogined() == false) {
 					System.out.println("로그인 후 이용해주세요.");
 					continue;
 				}
-				
+
 				System.out.printf("%s님이 로그아웃되었습니다.\n", loginedMember.userName);
 				loginedMember = null;
 
@@ -165,15 +165,11 @@ public class App {
 				}
 
 				for (Article article : printArticle) {
-					System.out.printf("글 ID : %d\n", article.id);
-					System.out.printf("제목 : %s\n", article.title);
-					System.out.printf("날짜 : %s\n", article.date);
-					System.out.printf("조회수 : %d\n", article.hit);
-					System.out.println("===========");
+					printList(article);
 				}
 
 			} else if (command.startsWith("article modify")) {
-				
+
 				if (isLogined() == false) {
 					System.out.println("로그인 후 이용해주세요.");
 					continue;
@@ -227,15 +223,10 @@ public class App {
 
 				foundArticle.increseHit();
 
-				System.out.printf("글 ID : %d\n", foundArticle.id);
-				System.out.printf("제목 : %s\n", foundArticle.title);
-				System.out.printf("내용 : %s\n", foundArticle.content);
-				System.out.printf("날짜 : %s\n", foundArticle.date);
-				System.out.printf("조회수 : %d\n", foundArticle.hit);
-				System.out.println("===========");
+				printDetail(foundArticle);
 
 			} else if (command.startsWith("article delete")) {
-				
+
 				if (isLogined() == false) {
 					System.out.println("로그인 후 이용해주세요.");
 					continue;
@@ -275,11 +266,11 @@ public class App {
 	public void makeTestArticleData() {
 		System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
 
-		articles.add(new Article("제목1", "내용1"));
-		articles.add(new Article("제목2", "내용2"));
-		articles.add(new Article("제목3", "내용3"));
+		articles.add(new Article("제목1", "내용1", 1));
+		articles.add(new Article("제목2", "내용2", 2));
+		articles.add(new Article("제목3", "내용3", 3));
 	}
-	
+
 	public void makeTestMemberData() {
 		System.out.println("테스트를 위한 멤버 데이터를 생성합니다.");
 
@@ -301,20 +292,44 @@ public class App {
 		return null;
 
 	}
-	
+
 	public Member getMemberByLoginId(String loginId) {
-		
+
 		for (Member member : members) {
-			if(member.loginId.equals(loginId)) {
+			if (member.loginId.equals(loginId)) {
 				return member;
 			}
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public boolean isLogined() {
 		return loginedMember != null;
 	}
+
+	public void printList(Article article) {
+
+		System.out.printf("글 ID : %d\n", article.id);
+		System.out.printf("제목 : %s\n", article.title);
+		System.out.printf("날짜 : %s\n", article.date);
+		System.out.printf("조회수 : %d\n", article.hit);
+		System.out.printf("작성자 : %s\n", article.memberId);
+		System.out.println("===========");
+
+	}
+	
+	public void printDetail(Article article) {
+
+		System.out.printf("글 ID : %d\n", article.id);
+		System.out.printf("제목 : %s\n", article.title);
+		System.out.printf("내용 : %s\n", article.content);
+		System.out.printf("날짜 : %s\n", article.date);
+		System.out.printf("조회수 : %d\n", article.hit);
+		System.out.printf("작성자 : %s\n", article.memberId);
+		System.out.println("===========");
+
+	}
+
 }
