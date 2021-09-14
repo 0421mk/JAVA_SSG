@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.java.ssg.util.Util;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -40,7 +42,7 @@ public class Main {
 				for (Article article : articles) {
 					System.out.printf("글 ID : %d\n", article.id);
 					System.out.printf("제목 : %s\n", article.title);
-					System.out.printf("내용 : %s\n", article.content);
+					System.out.printf("날짜 : %s\n", article.date);
 					System.out.println("===========");
 				}
 
@@ -73,6 +75,7 @@ public class Main {
 				System.out.printf("글 ID : %d\n", foundArticle.id);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.content);
+				System.out.printf("날짜 : %s\n", foundArticle.date);
 				System.out.println("===========");
 
 			} else if (command.startsWith("article delete")) {
@@ -129,11 +132,13 @@ class Article {
 	int id;
 	String title;
 	String content;
+	String date;
 
 	Article(String title, String content) {
 		indexId++;
 		id = indexId;
 		this.title = title;
 		this.content = content;
+		this.date = Util.getNowDateStr();
 	}
 }
