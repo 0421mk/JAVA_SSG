@@ -43,6 +43,7 @@ public class Main {
 					System.out.printf("글 ID : %d\n", article.id);
 					System.out.printf("제목 : %s\n", article.title);
 					System.out.printf("날짜 : %s\n", article.date);
+					System.out.printf("조회수 : %d\n", article.hit);
 					System.out.println("===========");
 				}
 
@@ -111,11 +112,14 @@ public class Main {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
 					continue;
 				}
+				
+				foundArticle.increseHit();
 
 				System.out.printf("글 ID : %d\n", foundArticle.id);
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.content);
 				System.out.printf("날짜 : %s\n", foundArticle.date);
+				System.out.printf("조회수 : %d\n", foundArticle.hit);
 				System.out.println("===========");
 
 			} else if (command.startsWith("article delete")) {
@@ -173,6 +177,7 @@ class Article {
 	String title;
 	String content;
 	String date;
+	int hit = 0;
 
 	Article(String title, String content) {
 		indexId++;
@@ -180,5 +185,9 @@ class Article {
 		this.title = title;
 		this.content = content;
 		this.date = Util.getNowDateStr();
+	}
+	
+	void increseHit() {
+		hit++;
 	}
 }
