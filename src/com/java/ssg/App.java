@@ -189,7 +189,7 @@ public class App {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
 					continue;
 				}
-				
+
 				if (foundArticle.memberId != loginedMember.id) {
 					System.out.printf("권한이 없습니다.\n");
 					continue;
@@ -251,7 +251,7 @@ public class App {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
 					continue;
 				}
-				
+
 				if (foundArticle.memberId != loginedMember.id) {
 					System.out.printf("권한이 없습니다.\n");
 					continue;
@@ -319,17 +319,29 @@ public class App {
 		return loginedMember != null;
 	}
 
+	public String getMemberNameByArticleId(int articleId) {
+		String memberName = null;
+
+		for (Member member : members) {
+			if (member.id == articleId) {
+				memberName = member.userName;
+			}
+		}
+
+		return memberName;
+	}
+
 	public void printList(Article article) {
 
 		System.out.printf("글 ID : %d\n", article.id);
 		System.out.printf("제목 : %s\n", article.title);
 		System.out.printf("날짜 : %s\n", article.date);
 		System.out.printf("조회수 : %d\n", article.hit);
-		System.out.printf("작성자 : %s\n", article.memberId);
+		System.out.printf("작성자 : %s\n", getMemberNameByArticleId(article.memberId));
 		System.out.println("===========");
 
 	}
-	
+
 	public void printDetail(Article article) {
 
 		System.out.printf("글 ID : %d\n", article.id);
@@ -337,7 +349,7 @@ public class App {
 		System.out.printf("내용 : %s\n", article.content);
 		System.out.printf("날짜 : %s\n", article.date);
 		System.out.printf("조회수 : %d\n", article.hit);
-		System.out.printf("작성자 : %s\n", article.memberId);
+		System.out.printf("작성자 : %s\n", getMemberNameByArticleId(article.memberId));
 		System.out.println("===========");
 
 	}
