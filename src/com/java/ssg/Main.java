@@ -31,6 +31,11 @@ public class Main {
 				System.out.printf("%d번 글이 생성되었습니다.\n", article.id);
 
 			} else if (command.equals("article list")) {
+				
+				if(articles.size() == 0) {
+					System.out.println("글이 존재하지 않습니다.");
+					continue;
+				}
 
 				for (Article article : articles) {
 					System.out.printf("글 ID : %d\n", article.id);
@@ -69,6 +74,35 @@ public class Main {
 				System.out.printf("제목 : %s\n", foundArticle.title);
 				System.out.printf("내용 : %s\n", foundArticle.content);
 				System.out.println("===========");
+
+			} else if (command.startsWith("article delete")) {
+
+				command = command.substring("article detail".length()).trim();
+
+				if (isNumeric(command) == false) {
+					System.out.println("한칸 띄고 숫자만 입력해주세요.");
+					continue;
+				}
+
+				int commandNum = Integer.parseInt(command);
+				Article foundArticle = null;
+
+				for (Article article : articles) {
+
+					if (article.id == commandNum) {
+						foundArticle = article;
+						break;
+					}
+
+				}
+
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
+					continue;
+				}
+
+				articles.remove(foundArticle);
+				System.out.printf("%d번 게시물이 삭제되었습니다.\n", foundArticle.id);
 
 			} else if (command.equals("system exit")) {
 				System.out.println("system exit");
