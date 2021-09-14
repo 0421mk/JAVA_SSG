@@ -189,6 +189,11 @@ public class App {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
 					continue;
 				}
+				
+				if (foundArticle.memberId != loginedMember.id) {
+					System.out.printf("권한이 없습니다.\n");
+					continue;
+				}
 
 				System.out.printf("제목 : ");
 				String title = sc.nextLine();
@@ -244,6 +249,11 @@ public class App {
 
 				if (foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", commandNum);
+					continue;
+				}
+				
+				if (foundArticle.memberId != loginedMember.id) {
+					System.out.printf("권한이 없습니다.\n");
 					continue;
 				}
 
